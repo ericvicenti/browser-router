@@ -31,23 +31,6 @@ undefined
 
 Make the router execute a route. This does a browser pushState to change the URL and params, while keeping the client app running.
 
-### back()
-
-```
-> router.back();
-undefined
-```
-
-Takes the browser one page back in history.
-
-### forward()
-
-```
-> router.forward();
-undefined
-```
-
-Takes the browser forward in history.
 
 ### onRoute(handler)
 

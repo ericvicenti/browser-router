@@ -1,7 +1,7 @@
 {
   "name": "browser-router",
   "description": "A simple router for one page browser apps",
-  "version": "0.0.1-enhance.2",
+  "version": "0.0.1-enhance.3",
   "main": "browser-router.js",
   "keywords": [
     "router",

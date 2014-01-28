@@ -7,15 +7,15 @@ var state = {};
 
 var router = exports;
 
-router.route = function route(path, data, title) {
+router.route = function route(path, params, title) {
   state.path = path || state.path || router.getPath();
-  state.data = data || state.data || {};
+  state.params = data || state.data || {};
   state.title = title || state.title || '';
   var search = '';
   if (!_.isEmpty(state.data)) {
-    search = '?' + queryString.stringify(state.data)
+    search = '?' + queryString.stringify(state.params);
   }
-  History.pushState(state.data, state.title, state.path + search);
+  History.pushState(state.params, state.title, state.path + search);
 }
 
 
@@ -97,12 +97,4 @@ router.toggleParam = function toggleParam(paramName, value) {
   } else {
     router.setParam(paramName, value);
   }
-}
-
-router.back = function back() {
-  return History.back();
-}
-
-router.forward = function forward() {
-  return History.forward();
 }
