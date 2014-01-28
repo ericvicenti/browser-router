@@ -1,20 +1,32 @@
 browser-router
 ==============
 
-A simple router for one page browser apps
+> A simple router for one page browser apps.
+
+
+## WHY
+
+> This is an effort of abstracting the routing such that applications can utilize a similar router on the client as on the server. The server counterpart is yet to be built.
 
 ## INSTALL
 
-`npm install --save browser-router`
+```
+npm install --save browser-router
+```
 
-`var router = require('browser-router')`
+### USE
+
+```
+> var router = require('browser-router');
+```
 
 ## API
 
 ### route(path, params, title)
 
 ```
-  router.route('/login', { next: '/secret/' }, 'Log In');
+> router.route('/login', { next: '/secret' }, 'Log In');
+undefined
 ```
 
 Make the router execute a route. This does a browser pushState to change the URL and params, while keeping the client app running.
@@ -22,7 +34,8 @@ Make the router execute a route. This does a browser pushState to change the URL
 ### back()
 
 ```
-  router.back();
+> router.back();
+undefined
 ```
 
 Takes the browser one page back in history.
@@ -30,7 +43,8 @@ Takes the browser one page back in history.
 ### forward()
 
 ```
-  router.forward();
+> router.forward();
+undefined
 ```
 
 Takes the browser forward in history.
@@ -38,65 +52,145 @@ Takes the browser forward in history.
 ### onRoute(handler)
 
 ```
-  router.onRoute(function(route, params, title) {
-  
+  router.onRoute(function myHandler(route, params, title) {
+  	// handle this change in browser state
   });
 ```
 
-Catch an incoming route from the browser. This could have been from a route(), back(), forward(), or the user's change.
+Catch an incoming route from the browser. This happens when:
+
+* The user changes the route
+* Browser back button, or `back()`
+* Browser forward button, or `forward()`
+* `route()`
+* `setPath()`
+* `setParams()`, `setParam()`, `removeParam()`, `toggleParam()`
+
+Changes in the title do not cause routes. It is provided to the route handler as a convenience.
+
+
+### offRoute(handler)
+
+```
+> router.offRoute(myHandler);
+undefined
+```
+
+Remove a handler that was listening to the router via `onRoute`.
 
 ### getPath()
 
 ```
-> getPath()
+> router.getPath();
 '/login'
 ```
 
 Grab the current path. Excludes search query and hashstring parameters.
 
-### router.getTitle()
+### setPath()
+
+```
+> router.setPath('/login/securely');
+undefined
+```
+
+Change the current path, causing a route.
+
+### getTitle()
 
 
 ```
-> getPath()
-'/login'
+> router.getTitle();
+'Log In'
 ```
 
 Get the title of the current location.
 
-### router.getParams()
+
+### setTitle()
+
 
 ```
-> getPath()
-'/login'
+> router.setTitle('Secure Log In');
+undefined
 ```
 
-Grab the current parameters object.
+Set the title of the current location. This alters the current spot in history and does *not* cause a route.
 
-### router.getParam(paramName)
 
-Grab one search query string parameter.
+### getParams()
 
-### router.setParams(params)
+```
+> router.getParams();
+{ next: '/secret' }
+```
 
-Set a new params object, replacing the query string.
+Grab the current parameters object from the search query.
 
-### router.hasParam(paramName)
+### getParam(paramName)
+
+```
+> router.getParam('next');
+'/secret'
+```
+
+Grab a single search query string parameter.
+
+### setParams(params)
+
+```
+> router.setParam({ next: '/secret/extra_secret', rememberMe: null });
+undefined
+```
+
+Set a new params object, replacing the query string, causing a route.
+
+This example would route to `?next=/secret/extra_secret&rememberMe`
+
+When the values are `null`, the param will be present but have no value, like the `rememberMe` param in the example.
+
+### hasParam(paramName)
+
+```
+> router.hasParam('rememberMe')
+true
+```
 
 Checks for the presence of an item in the query string.
 
-Useful for checking flags in the query like `.hasParam('reverse') == true` when the query string is `?page=2&reverse`
+Useful for checking flags in the query, IE when the query string is `?next=/secret&rememberMe`
 
-### router.setParam(paramName [, value])
+### setParam(paramName [, value])
 
-Set a single parameter in the query string without wiping out the rest of the query.
+```
+> router.setParam('securityLevel', '3')
+undefined
+```
 
-When the value is missing or `null`, the param will be present but have no value, like the `reverse` param in the example above.
+Set a single parameter in the query string without wiping out the rest of the params. Causes a route.
 
-### router.removeParam(paramName)
+This example would route to `?next=/secret/extra_secret&rememberMe&securityLevel=3`
+
+When the value is missing or `null`, the param will be present but have no value, like the `rememberMe` param in the example above.
+
+### removeParam(paramName)
+
+```
+> router.removeParam('securityLevel')
+undefined
+```
+
+This example would route to `?next=/secret/extra_secret&rememberMe`
 
 Removes a parameter from the search query string. Mostly the inverse of `setParam`.
 
-### router.toggleParam(paramName [, value])
+### toggleParam(paramName [, value])
+
+```
+> router.toggleParam('rememberMe')
+undefined
+```
+
+This example would route to `?next=/secret/extra_secret`
 
 Toggles the presence of a param in the query string. If setting the param, use the provided value.
