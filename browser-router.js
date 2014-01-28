@@ -1,7 +1,6 @@
 var queryString = require('query-string');
 var History = require('html5-history');
 var _ = require('underscore');
-var window = require('globals/window');
 
 var state = {};
 
@@ -9,10 +8,10 @@ var router = exports;
 
 router.route = function route(path, params, title) {
   state.path = path || state.path || router.getPath();
-  state.params = data || state.data || {};
+  state.params = params || state.params || {};
   state.title = title || state.title || '';
   var search = '';
-  if (!_.isEmpty(state.data)) {
+  if (!_.isEmpty(state.params)) {
     search = '?' + queryString.stringify(state.params);
   }
   History.pushState(state.params, state.title, state.path + search);
@@ -72,7 +71,6 @@ router.setParams = function setParams(params) {
 }
 
 router.hasParam = function hasParam(paramName) {
-  var params = router.getParams();
   var param = router.getParam(paramName);
   if (_.isUndefined(param)) return false;
   else return true;
