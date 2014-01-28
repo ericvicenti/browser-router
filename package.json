@@ -1,7 +1,7 @@
 {
   "name": "browser-router",
   "description": "A simple router for one page browser apps",
-  "version": "0.0.1",
+  "version": "0.0.0-release.0",
   "main": "browser-router.js",
   "keywords": [
     "router",
@@ -17,5 +17,9 @@
     }
   ],
   "license": "Apache 2.0",
-  "dependencies": []
+  "dependencies": {
+    "underscore": "~1.5.2",
+    "query-string": "~0.1.1",
+    "html5-router": "~0.2.1"
+  }
 }
