@@ -21,6 +21,6 @@
   "dependencies": {
     "underscore": "~1.5.2",
     "query-string": "~0.1.1",
-    "html5-router": "~0.2.1"
+    "html5-history": "~0.1.5"
   }
 }
