@@ -62,7 +62,7 @@ router.getParams = function getParams() {
 
 router.getParam = function getParam(paramName) {
   var params = router.getParams();
-  if (!_.contains(_.values(params), paramName)) {
+  if (!_.contains(_.keys(params), paramName)) {
     // we should check for this because sometimes there is random stuff on the object prototype
     return;
   }

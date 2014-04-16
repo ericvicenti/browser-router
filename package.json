@@ -1,7 +1,7 @@
 {
   "name": "browser-router",
   "description": "A simple router for one page browser apps",
-  "version": "0.1.3-dummy-fix.0",
+  "version": "0.1.3-dummy-fix.1",
   "main": "browser-router.js",
   "keywords": [
     "router",
