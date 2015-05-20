@@ -1,5 +1,5 @@
 var queryString = require('query-string');
-var History = require('html5-history');
+var History = require('./html5-history/index');
 var _ = require('underscore');
 
 var state = {};
